@@ -144,7 +144,7 @@ def check_correctness(problem, generation, timeout, debug):
 
 
 def eval_and_save_problems(args):
-    problems = load_dataset("codeparrot/apps", split=f"{args.split}")
+    problems = load_dataset("codeparrot/apps", split=f"{args.split}", trust_remote_code=True)
 
     codes = {}
     gpt_bleu = {}
@@ -165,7 +165,7 @@ def eval_and_save_problems(args):
 
     # Only do the problems that are specified.
     if args.index:
-        problems = load_dataset("codeparrot/apps", split=f"{args.split}[{args.index}]")
+        problems = load_dataset("codeparrot/apps", split=f"{args.split}[{args.index}]", trust_remote_code=True)
     else:
         if args.start > len(problems) or args.start < 0:
             print(f"start index {args.start} > number of problems {len(problems)}")
@@ -175,10 +175,10 @@ def eval_and_save_problems(args):
             end = len(problems)
         else:
             end = args.end
-        problems = load_dataset("codeparrot/apps", split=f"{args.split}[{start}:{end}]")
+        problems = load_dataset("codeparrot/apps", split=f"{args.split}[{start}:{end}]", trust_remote_code=True)
 
     if args.stop_early:
-        problems = load_dataset("codeparrot/apps", split=f"{args.split}[{start}:{args.stop_early}]")
+        problems = load_dataset("codeparrot/apps", split=f"{args.split}[{start}:{args.stop_early}]", trust_remote_code=True)
 
     # main eval loop
     for index, problem in enumerate(tqdm(problems)):
