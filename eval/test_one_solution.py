@@ -320,6 +320,10 @@ def main(args):
     
     for dct in all_metrics:
         if dct["dataset"] == Path(args.jsonl_path).stem:
+            try:
+                _ = dct["metric"].pop("accuracy@1")
+            except:
+                pass
             dct["metric"]["test_case_average"] = round(test_case_average, 4)
             dct["metric"]["strict_accuracy"] = round(strict_accuracy, 4)
     
