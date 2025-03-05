@@ -406,7 +406,7 @@ def main(args):
     test_case_average, strict_accuracy = print_results(results, args)
 
     # underlay
-    all_metrics = load_jsonl("dump/all_metrics.jsonl")
+    all_metrics = load_jsonl(f"{args.dump}/all_metrics.jsonl")
     tests = load_json("results/all_results.json")
 
     for idx, dct in enumerate(data_jsonl):
@@ -421,9 +421,9 @@ def main(args):
             except:
                 pass
             dct["metric"]["test_case_average"] = round(test_case_average, 4)
-            dct["metric"]["strict_accuracy"] = round(strict_accuracy, 4)
+            dct["metric"]["accuracy"] = round(strict_accuracy, 4)
 
-    save_jsonl(all_metrics, "dump/all_metrics.jsonl")
+    save_jsonl(all_metrics, f"{args.dump}/all_metrics.jsonl")
     save_jsonl(data_jsonl, args.jsonl_path)
 
 
@@ -435,6 +435,7 @@ if __name__ == "__main__":
         description="Testing a Language Model on Python Code"
     )
     parser.add_argument("--jsonl_path", type=str, help="results in jsonl format")
+    parser.add_argument("--dump", type=str, help="dump dir path (obm)")
     parser.add_argument(
         "-t",
         "--test_loc",
